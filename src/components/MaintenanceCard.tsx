@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   pendente: {
-    backgroundColor: '#b2101f', // amarelo para status em andamento
+    backgroundColor: '#b2101f', // vermelha para status em andamento
     color: '#fff',
   },
 });
