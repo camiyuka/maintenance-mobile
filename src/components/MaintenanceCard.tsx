@@ -32,6 +32,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#9BB7BD',
     borderRadius: 10,
     margin: 10,
+    width: 400, 
+    height: 220,
   },
   label: {
     fontSize: 16,
