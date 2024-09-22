@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Modal, StyleSheet, Picker } from 'react-native';
+import { View, Text, TextInput, Button, Modal, StyleSheet } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 
 const MaintenanceModal = ({ visible, onClose }) => {
   const [description, setDescription] = useState('');
