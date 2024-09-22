@@ -3,8 +3,8 @@ import {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text, ScrollView, Button } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Para o ícone de robô
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'; // Para os demais ícones
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MachineCard from './src/components/MachineCard';
 import MaintenanceCard from './src/components/MaintenanceCard';
 import MaintenanceModal from './src/components/MaintenanceModal';
