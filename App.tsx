@@ -15,11 +15,11 @@ const Tab = createBottomTabNavigator();
 
 function MachinesScreen() {
   return (
-    <View> 
+    <ScrollView> 
       <MachineCard/>
       <MachineCard/>
       <MachineCard/>
-    </View>
+    </ScrollView>
   );
 }
 function MaintenanceScreen() {
