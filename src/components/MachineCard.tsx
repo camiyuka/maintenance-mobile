@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
-import { View, Text, Button, Modal, StyleSheet, Switch } from 'react-native';
+import { View, Text, Button, Modal, TextInput, Switch, StyleSheet } from 'react-native';
 import MaintenanceCard from './MaintenanceCard'; // Assumindo que o MaintenanceCard está nesse caminho
 
 const MachineCard = () => {
   const [inMaintenance, setInMaintenance] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [reportModalVisible, setReportModalVisible] = useState(false);
-
-  const handleAddComment = () => {
-    console.log('Adicionar comentário');
-  };
+  const [comment, setComment] = useState('');
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Nome da Máquina</Text>
       <Text style={styles.label}>Tipo da Máquina</Text>
       <Text style={styles.label}>Localização</Text>
+      <View style={styles.switchContainer}>
+        <Text style={styles.label}>Adicionar comentário:</Text>
+        <TextInput
+          value={comment}
+          onChangeText={setComment}
+          placeholder="Digite seu comentário"
+          style={styles.input}
+        />
+      </View>
       <View style={styles.switchContainer}>
         <Text style={styles.label}>Em Manutenção</Text>
         <Switch
@@ -114,6 +120,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 12,
+  },
+  input: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 12,
+    width: '70%', // Ajuste a largura conforme necessário
   },
   buttonContainer: {
     marginTop: 12,
