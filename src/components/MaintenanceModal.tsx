@@ -51,7 +51,7 @@ const MaintenanceModal = ({ visible, onClose }) => {
 
         <View style={styles.buttonContainer}>
           <Button title="Salvar" onPress={handleSubmit} color="#4a6572" />
-          <Button title="Cancelar" onPress={onClose} color="#b2101f" />
+          <Button title="Cancelar" onPress={onClose} color="#b4b4b4" />
         </View>
       </View>
     </Modal>

@@ -64,7 +64,7 @@ const MachineCard = () => {
             />
           </View>
 
-          <Button title="Fechar" onPress={() => setModalVisible(false)} />
+          <Button color="#b4b4b4" title="Fechar" onPress={() => setModalVisible(false)} />
         </View>
       </Modal>
 
@@ -95,7 +95,7 @@ const MachineCard = () => {
             status="Finalizada"
           />
 
-          <Button title="Fechar" onPress={() => setReportModalVisible(false)} />
+          <Button color="#b4b4b4" title="Fechar" onPress={() => setReportModalVisible(false)} />
         </View>
       </Modal>
     </View>
