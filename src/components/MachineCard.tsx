@@ -47,11 +47,11 @@ const MachineCard = () => {
       >
         <View style={styles.modalView}>
           <Text style={styles.modalTitle}>Detalhes da Máquina</Text>
-          <Text>Nome da Máquina: XYZ</Text>
-          <Text>Modelo: XYYU</Text>
-          <Text>Data de fabricação: 20/08/2022</Text>
-          <Text>Número de série: 2986</Text>
-          <Text>Última manutenção: 20/08/2024</Text>
+          <Text style={{ color: '#fff' }}>Nome da Máquina: XYZ</Text>
+          <Text style={{ color: '#fff' }}>Modelo: XYYU</Text>
+          <Text style={{ color: '#fff' }}>Data de fabricação: 20/08/2022</Text>
+          <Text style={{ color: '#fff' }}>Número de série: 2986</Text>
+          <Text style={{ color: '#fff' }}>Última manutenção: 20/08/2024</Text>
 
           <View style={styles.buttonContainer}>
             <Button
@@ -134,25 +134,20 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   modalView: {
-    margin: 20,
-    backgroundColor: '#9BB7BD',
+    margin: 0, // Alterar para 0 para ocupar toda a tela
+    backgroundColor: '#4a6572', // Adicionar transparência ao fundo
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    flex: 1, // Adicionar para ocupar toda a tela
+    color:'white'
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 15,
+    color:"#fff"
   },
 });
 
