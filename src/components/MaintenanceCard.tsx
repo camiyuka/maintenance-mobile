@@ -28,12 +28,12 @@ const MaintenanceCard = ({ description, date, status }) => {
 // Estilos do componente
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
     backgroundColor: '#9BB7BD',
     borderRadius: 10,
     margin: 10,
-    width: 400, 
-    height: 220,
+    width: 300, 
+    height: 200,
   },
   label: {
     fontSize: 16,
