@@ -105,9 +105,9 @@ export default function App() {
 
             return <IconComponent name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'navy', // Cor dos ícones ativos
+          tabBarActiveTintColor: '#fff', // Cor dos ícones ativos
           tabBarInactiveTintColor: 'darkgray', // Cor dos ícones inativos
-          tabBarStyle: { backgroundColor: '#9BB7BD' }, // Cor de fundo da barra
+          tabBarStyle: { backgroundColor: '#4a6572' }, // Cor de fundo da barra
         })}
       >
         <Tab.Screen
