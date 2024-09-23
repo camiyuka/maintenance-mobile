@@ -1,78 +1,98 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Modal, StyleSheet } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
 
-const MaintenanceModal = ({ visible, onClose }) => {
+const MaintenanceModal = ({ visible, onClose, onSave }) => {
   const [description, setDescription] = useState('');
-  const [priority, setPriority] = useState('baixa');
+  const [priority, setPriority] = useState('');
   const [responsible, setResponsible] = useState('');
+  const [status, setStatus] = useState('');
 
-  const handleSubmit = () => {
-    // Aqui você pode adicionar a lógica para enviar os dados
-    console.log({ description, priority, responsible });
-    onClose(); // Fecha o modal após o envio
+  const handleSave = () => {
+    const newMaintenance = {
+      description,
+      date: new Date().toLocaleDateString(),
+      status: status || 'Em andamento', // Define o status padrão se não preenchido
+      priority,
+      responsible,
+    };
+
+    onSave(newMaintenance);
+    // Limpa os campos após salvar
+    setDescription('');
+    setPriority('');
+    setResponsible('');
+    setStatus('');
+  };
+
+  const getStatusStyle = () => {
+    switch (status) {
+      case 'Finalizada':
+        return styles.finalizada;
+      case 'Em andamento':
+        return styles.andamento;
+      case 'Pendente':
+        return styles.pendente;
+      default:
+        return styles.pendente; // Define um estilo padrão caso o status não seja preenchido
+    }
   };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
+    <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.modalView}>
         <Text style={styles.modalTitle}>Adicionar Manutenção</Text>
 
-        <Text style={styles.label}>Descrição do Problema</Text>
         <TextInput
-          style={styles.input}
+          placeholder="Descrição"
           value={description}
           onChangeText={setDescription}
-          placeholder="Descreva o problema"
-        />
-
-        <Text style={styles.label}>Prioridade</Text>
-        <Picker
-          selectedValue={priority}
-          style={styles.picker}
-          onValueChange={(itemValue) => setPriority(itemValue)}
-        >
-          <Picker.Item label="Baixa" value="baixa" />
-          <Picker.Item label="Média" value="media" />
-          <Picker.Item label="Alta" value="alta" />
-        </Picker>
-
-        <Text style={styles.label}>Responsável</Text>
-        <TextInput
           style={styles.input}
+        />
+        <TextInput
+          placeholder="Prioridade (Alta, Média, Baixa)"
+          value={priority}
+          onChangeText={setPriority}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Responsável"
           value={responsible}
           onChangeText={setResponsible}
-          placeholder="Nome do responsável"
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Status (Finalizada, Em andamento, Pendente)"
+          value={status}
+          onChangeText={setStatus}
+          style={styles.input}
         />
 
+        {/* Exibe o status com a cor correspondente */}
+        {status ? (
+          <Text style={[styles.status, getStatusStyle()]}>
+            Status: {status}
+          </Text>
+        ) : null}
+
         <View style={styles.buttonContainer}>
-          <Button title="Salvar" onPress={handleSubmit} color="#4a6572" />
-          <Button title="Cancelar" onPress={onClose} color="#b4b4b4" />
+          <Button title="Salvar" onPress={handleSave} color="#4a6572" />
+          <Button title="Cancelar" color="#b4b4b4" onPress={onClose} />
         </View>
       </View>
     </Modal>
   );
 };
 
-// Estilos do componente
 const styles = StyleSheet.create({
   modalView: {
     margin: 20,
-    backgroundColor: '#9BB7BD',
-    borderRadius: 20,
-    padding: 35,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
@@ -81,31 +101,39 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 15,
-
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-    color: '#fff',
   },
   input: {
-    backgroundColor: '#fff',
+    width: '100%',
     padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 12,
-    width: '100%',
-  },
-  picker: {
-    height: 50,
-    width: '100%',
-    backgroundColor: '#fff',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   buttonContainer: {
-    marginTop: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+  },
+  status: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 5,
+    borderRadius: 5,
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  finalizada: {
+    backgroundColor: '#4CAF50', // Verde para status "Finalizada"
+    color: '#fff',
+  },
+  andamento: {
+    backgroundColor: '#FFC107', // Amarelo para status "Em andamento"
+    color: '#fff',
+  },
+  pendente: {
+    backgroundColor: '#b2101f', // Vermelho para status "Pendente"
+    color: '#fff',
   },
 });
 
