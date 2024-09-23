@@ -74,9 +74,9 @@ function MaintenanceScreen() {
 
 function RegisterPartsScreen() {
   return (
-    <View>
+    <ScrollView>
       <RegisterParts />
-    </View>
+    </ScrollView>
   );
 }
 
