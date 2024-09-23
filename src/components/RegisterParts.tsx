@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, Alert } from 'react-native';
+import PieceCard from './PieceCard'; // Importando o PieceCard
 
-const mockStock = [
+// Estoque inicial
+const initialStock = [
   { id: '1', name: 'Parafuso', quantity: 100 },
   { id: '2', name: 'Porca', quantity: 50 },
   { id: '3', name: 'Arruela', quantity: 200 },
@@ -12,12 +14,37 @@ const RegisterPartsScreen = () => {
   const [partName, setPartName] = useState('');
   const [quantityUsed, setQuantityUsed] = useState('');
   const [usedParts, setUsedParts] = useState([]);
+  const [stock, setStock] = useState(initialStock); // Armazena o estado do estoque
 
   const handleRegister = () => {
-    if (partName && quantityUsed) {
-      setUsedParts([...usedParts, { id: Math.random().toString(), name: partName, quantity: quantityUsed }]);
-      setPartName('');
-      setQuantityUsed('');
+    const quantityNum = parseInt(quantityUsed);
+
+    if (partName && quantityUsed && !isNaN(quantityNum)) {
+      const stockPart = stock.find((item) => item.name.toLowerCase() === partName.toLowerCase());
+
+      // Verifica se a peça existe no estoque
+      if (stockPart) {
+        if (stockPart.quantity >= quantityNum) {
+          // Atualiza o estoque diminuindo a quantidade utilizada
+          const updatedStock = stock.map((item) =>
+            item.name.toLowerCase() === partName.toLowerCase()
+              ? { ...item, quantity: item.quantity - quantityNum }
+              : item
+          );
+          setStock(updatedStock);
+
+          // Adiciona a peça utilizada ao registro
+          setUsedParts([...usedParts, { id: Math.random().toString(), name: partName, quantity: quantityUsed }]);
+          setPartName('');
+          setQuantityUsed('');
+        } else {
+          Alert.alert('Quantidade Insuficiente', 'A quantidade no estoque é menor do que a solicitada.');
+        }
+      } else {
+        Alert.alert('Peça não encontrada', 'A peça que você está tentando registrar não existe no estoque.');
+      }
+    } else {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos corretamente.');
     }
   };
 
@@ -50,8 +77,16 @@ const RegisterPartsScreen = () => {
           </View>
         )}
       />
-    </View>
 
+      <Text style={styles.title}>Estoque Atual</Text>
+      <FlatList
+        data={stock}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <PieceCard pieceName={item.name} quantity={item.quantity} />
+        )}
+      />
+    </View>
   );
 };
 
