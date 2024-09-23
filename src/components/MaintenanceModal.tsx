@@ -38,45 +38,47 @@ const MaintenanceModal = ({ visible, onClose, onSave }) => {
   };
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={true}>
-      <View style={styles.modalView}>
-        <Text style={styles.modalTitle}>Adicionar Manutenção</Text>
+    <Modal visible={visible} animationType="fade" transparent={true}>
+      <View style={styles.overlay}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalTitle}>Adicionar Manutenção</Text>
 
-        <TextInput
-          placeholder="Descrição"
-          value={description}
-          onChangeText={setDescription}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Prioridade (Alta, Média, Baixa)"
-          value={priority}
-          onChangeText={setPriority}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Responsável"
-          value={responsible}
-          onChangeText={setResponsible}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Status (Finalizada, Em andamento, Pendente)"
-          value={status}
-          onChangeText={setStatus}
-          style={styles.input}
-        />
+          <TextInput
+            placeholder="Descrição"
+            value={description}
+            onChangeText={setDescription}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Prioridade (Alta, Média, Baixa)"
+            value={priority}
+            onChangeText={setPriority}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Responsável"
+            value={responsible}
+            onChangeText={setResponsible}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Status (Finalizada, Em andamento, Pendente)"
+            value={status}
+            onChangeText={setStatus}
+            style={styles.input}
+          />
 
-        {/* Exibe o status com a cor correspondente */}
-        {status ? (
-          <Text style={[styles.status, getStatusStyle()]}>
-            Status: {status}
-          </Text>
-        ) : null}
+          {/* Exibe o status com a cor correspondente */}
+          {status ? (
+            <Text style={[styles.status, getStatusStyle()]}>
+              Status: {status}
+            </Text>
+          ) : null}
 
-        <View style={styles.buttonContainer}>
-          <Button title="Salvar" onPress={handleSave} color="#4a6572" />
-          <Button title="Cancelar" color="#b4b4b4" onPress={onClose} />
+          <View style={styles.buttonContainer}>
+            <Button title="Salvar" onPress={handleSave} color="#4a6572" />
+            <Button title="Cancelar" color="#b4b4b4" onPress={onClose} />
+          </View>
         </View>
       </View>
     </Modal>
@@ -84,18 +86,22 @@ const MaintenanceModal = ({ visible, onClose, onSave }) => {
 };
 
 const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semi-transparente
+  },
   modalView: {
-    margin: 20,
+    width: '80%', // Largura do card/modal
+    padding: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    elevation: 5, // Sombra no Android
+    shadowColor: '#000', // Sombra no iOS
+    shadowOffset: { width: 0, height: 2 }, // Offset da sombra
+    shadowOpacity: 0.3, // Opacidade da sombra
+    shadowRadius: 4, // Raio da sombra
   },
   modalTitle: {
     fontSize: 18,
