@@ -19,9 +19,12 @@ function MachinesScreen() {
       <Text style={{ fontSize: 20, fontWeight: 'bold', margin: 10, alignItems: 'center' }}>
         Gestão de máquinas
       </Text>
-      <MachineCard />
-      <MachineCard />
-      <MachineCard />
+      <MachineCard nome="Fresa" tipo="Industrial" localizacao="Oficina" />
+      <MachineCard nome="Máquina de Montagem" tipo="Manufatura" localizacao="Oficina" />
+      <MachineCard nome="Impressora" tipo="Escritório" localizacao="Oficina" />
+      <MachineCard nome="Cortadora a Laser" tipo="Industrial" localizacao="Fábrica" />
+      <MachineCard nome="Robô Colaborativo" tipo="Automação" localizacao="Linha de Produção" />
+
     </ScrollView>
   );
 }
