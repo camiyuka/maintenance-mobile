@@ -47,20 +47,19 @@ const MachineCard = () => {
       >
         <View style={styles.modalView}>
           <Text style={styles.modalTitle}>Detalhes da Máquina</Text>
-          <Text style={{ color: '#fff' }}>Nome da Máquina: XYZ</Text>
-          <Text style={{ color: '#fff' }}>Modelo: XYYU</Text>
-          <Text style={{ color: '#fff' }}>Data de fabricação: 20/08/2022</Text>
-          <Text style={{ color: '#fff' }}>Número de série: 2986</Text>
-          <Text style={{ color: '#fff' }}>Última manutenção: 20/08/2024</Text>
+          <Text style={styles.text}>Nome da Máquina: XYZ</Text>
+          <Text style={styles.text}>Modelo: XYYU</Text>
+          <Text style={styles.text}>Data de fabricação: 20/08/2022</Text>
+          <Text style={styles.text}>Número de série: 2986</Text>
+          <Text style={styles.text}>Última manutenção: 20/08/2024</Text>
 
           <View style={styles.buttonContainer}>
-            <Button
+            <Button color="#9BB7BD"
               title="Ver Relatório de Manutenções"
               onPress={() => {
                 setModalVisible(false);
                 setReportModalVisible(true);
               }}
-              color="#4a6572"
             />
           </View>
 
@@ -109,6 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#9BB7BD',
     borderRadius: 10,
     margin: 10,
+    fontSize: 22,
   },
   label: {
     fontSize: 16,
@@ -130,25 +130,33 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 12,
-    backgroundColor: '#4a6572',
+    backgroundColor: '#9BB7BD',
     borderRadius: 5,
+    margin:10
   },
   modalView: {
     margin: 0, // Alterar para 0 para ocupar toda a tela
-    backgroundColor: '#4a6572', // Adicionar transparência ao fundo
+    backgroundColor: '#4a6572', 
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
     flex: 1, // Adicionar para ocupar toda a tela
-    color:'white'
+    justifyContent: 'center', // Centraliza o conteúdo verticalmente
+    alignItems: 'center', // Centraliza o conteúdo horizontalmente
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 18, // Reduz o tamanho da fonte
     fontWeight: 'bold',
     marginBottom: 15,
-    color:"#fff"
+    color: '#fff',
+    textAlign: 'center', // Centraliza o título
+  },
+  text: {
+    fontSize: 16, // Reduz o tamanho da fonte para condizer com o tamanho dos botões
+    textAlign: 'center', // Centraliza o texto
+    color: '#fff',
+    marginBottom: 10, // Adiciona espaçamento entre as linhas de texto
   },
 });
+
 
 export default MachineCard;
