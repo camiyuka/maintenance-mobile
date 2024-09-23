@@ -1,76 +1,78 @@
 import * as React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text, ScrollView, Button } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MachineCard from './src/components/MachineCard';
-import MaintenanceCard from './src/components/MaintenanceCard';
 import MaintenanceModal from './src/components/MaintenanceModal';
-import RegisterParts from './src/components/RegisterParts'
+import RegisterParts from './src/components/RegisterParts';
 import PieceCard from './src/components/PieceCard';
+import Maintenance from './src/components/Maintenance';
 
 const Tab = createBottomTabNavigator();
 
 function MachinesScreen() {
   return (
-    <ScrollView> 
-      <MachineCard/>
-      <MachineCard/>
-      <MachineCard/>
+    <ScrollView>
+      <Text style={{ fontSize: 20, fontWeight: 'bold', margin: 10, alignItems: 'center' }}>
+        Gestão de máquinas
+      </Text>
+      <MachineCard />
+      <MachineCard />
+      <MachineCard />
     </ScrollView>
   );
 }
+
 function MaintenanceScreen() {
+  const [maintenances, setMaintenances] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const addMaintenance = (newMaintenance) => {
+    setMaintenances([...maintenances, newMaintenance]);
+    setModalVisible(false); // Fecha o modal após adicionar a manutenção
+  };
 
   return (
     <ScrollView>
+      <Text style={{ fontSize: 20, fontWeight: 'bold', margin: 10, alignItems: 'center' }}>
+        Gestão de Manutenções
+      </Text>
       <View style={{ padding: 20 }}>
-        {/* Exemplo de manutenção finalizada */}
-        <MaintenanceCard
-          description="Manutenção da máquina X"
-          date="20/09/2024"
-          status="Pendente"
+        {/* Renderiza os cards de manutenção com base no estado */}
+        {maintenances.map((maintenance, index) => (
+          <Maintenance
+            key={index} // Adiciona uma chave única para cada item
+            description={maintenance.description}
+            priority={maintenance.priority}
+            status={maintenance.status}
+            responsible={maintenance.responsible}
+          />
+        ))}
+
+        <Button
+          color="#4a6572"
+          title="Adicionar Manutenção"
+          onPress={() => setModalVisible(true)}
         />
 
-        {/* Exemplo de manutenção em andamento */}
-        <MaintenanceCard
-          description="Manutenção da máquina Y"
-          date="22/09/2024"
-          status="Em andamento"
-        />
-
-        <Button color='#4a6572' title="Adicionar Manutenção" onPress={() => setModalVisible(true)}/>
-
+        {/* Modal para adicionar manutenção */}
         <MaintenanceModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
+          onSave={addMaintenance} // Passa a função para salvar a manutenção
         />
-
-        {/* Adicione quantos cards de manutenção forem necessários */}
       </View>
     </ScrollView>
   );
 }
 
-function StockScreen(){
-  return(
-    <ScrollView style={{ flex: 1, padding: 20, backgroundColor: '#F5F5F5' }}>
-    <PieceCard pieceName='Rolamento de Esferas' quantity='136' />
-    <PieceCard pieceName='Parafuso' quantity='500' />
-    <PieceCard pieceName='Porca' quantity='75' />
-    <PieceCard pieceName='Cabo' quantity='30' />
-  </ScrollView>
-);
-}
-
-
 function RegisterPartsScreen() {
   return (
-    <View> 
-      <RegisterParts/>
+    <View>
+      <RegisterParts />
     </View>
   );
 }
@@ -85,31 +87,41 @@ export default function App() {
             let IconComponent;
 
             if (route.name === 'MachinesScreen') {
-              IconComponent = MaterialCommunityIcons; // Usando MaterialCommunityIcons para o robô
-              iconName = focused ? 'robot' : 'robot-outline'; // Robô
+              IconComponent = MaterialCommunityIcons;
+              iconName = focused ? 'robot' : 'robot-outline'; // Ícone de robô
             } else if (route.name === 'MaintenanceScreen') {
-              IconComponent = FontAwesome5; // Usando FontAwesome5 para o martelo
-              iconName = 'tools'; // Martelo para manutenção
+              IconComponent = FontAwesome5;
+              iconName = 'tools'; // Ícone de ferramentas para manutenção
             } else if (route.name === 'StockScreen') {
-              IconComponent = FontAwesome5; // Usando FontAwesome5 para engrenagem
-              iconName = 'cogs'; // Engrenagem para estoque
-            } else if (route.name === 'TeamsScreen') {
-              IconComponent = FontAwesome5; // Usando FontAwesome5 para pessoas
-              iconName = 'users'; // Pessoas para equipes
+              IconComponent = FontAwesome5;
+              iconName = 'cogs'; // Ícone de engrenagem para estoque
+            } else if (route.name === 'RegisterPartsScreen') {
+              IconComponent = FontAwesome5;
+              iconName = 'clipboard-list'; // Ícone de lista para registro de peças
             }
 
-            // Retorna o ícone correto
             return <IconComponent name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'navy',  // Cor dos ícones quando ativos
-          tabBarInactiveTintColor: 'darkgray',  // Cor dos ícones quando inativos
-          tabBarStyle: { backgroundColor: '#9BB7BD' },  // Cor de fundo da barra
+          tabBarActiveTintColor: 'navy', // Cor dos ícones ativos
+          tabBarInactiveTintColor: 'darkgray', // Cor dos ícones inativos
+          tabBarStyle: { backgroundColor: '#9BB7BD' }, // Cor de fundo da barra
         })}
       >
-        <Tab.Screen name="MachinesScreen" component={MachinesScreen} options={{ tabBarLabel: 'Máquinas' }} />
-        <Tab.Screen name="MaintenanceScreen" component={MaintenanceScreen} options={{ tabBarLabel: 'Manutenção' }} />
-        <Tab.Screen name="StockScreen" component={StockScreen} options={{ tabBarLabel: 'Estoque' }} />
-        <Tab.Screen name="TeamsScreen" component={RegisterPartsScreen} options={{ tabBarLabel: 'Registro de peças' }} />
+        <Tab.Screen
+          name="MachinesScreen"
+          component={MachinesScreen}
+          options={{ tabBarLabel: 'Máquinas' }}
+        />
+        <Tab.Screen
+          name="MaintenanceScreen"
+          component={MaintenanceScreen}
+          options={{ tabBarLabel: 'Manutenção' }}
+        />
+        <Tab.Screen
+          name="RegisterPartsScreen"
+          component={RegisterPartsScreen}
+          options={{ tabBarLabel: 'Registro de Peças' }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
