@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, Modal, TextInput, Switch, StyleSheet } from 'react-native';
 import MaintenanceCard from './MaintenanceCard'; // Assumindo que o MaintenanceCard está nesse caminho
 
-const MachineCard = () => {
+const MachineCard = ({ nome, tipo, localizacao }) => {
   const [inMaintenance, setInMaintenance] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [reportModalVisible, setReportModalVisible] = useState(false);
@@ -10,9 +10,10 @@ const MachineCard = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Nome da Máquina</Text>
-      <Text style={styles.label}>Tipo da Máquina</Text>
-      <Text style={styles.label}>Localização</Text>
+      <Text style={styles.label}>Nome: {nome}</Text>
+      <Text style={styles.label}>Tipo: {tipo}</Text>
+      <Text style={styles.label}>Localização: {localizacao}</Text>
+
       <View style={styles.switchContainer}>
         <Text style={styles.label}>Adicionar comentário:</Text>
         <TextInput
@@ -22,6 +23,7 @@ const MachineCard = () => {
           style={styles.input}
         />
       </View>
+
       <View style={styles.switchContainer}>
         <Text style={styles.label}>Em Manutenção</Text>
         <Switch
@@ -40,22 +42,24 @@ const MachineCard = () => {
 
       {/* Modal para Detalhes da Máquina */}
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalView}>
           <Text style={styles.modalTitle}>Detalhes da Máquina</Text>
-          <Text style={styles.text}>Nome da Máquina: XYZ</Text>
-          <Text style={styles.text}>Modelo: XYYU</Text>
+          <Text style={styles.text}>Nome da Máquina: {nome}</Text>
+          <Text style={styles.text}>Tipo: {tipo}</Text>
+          <Text style={styles.text}>Localização: {localizacao}</Text>
           <Text style={styles.text}>Data de fabricação: 20/08/2022</Text>
           <Text style={styles.text}>Número de série: 2986</Text>
           <Text style={styles.text}>Última manutenção: 20/08/2024</Text>
 
           <View style={styles.buttonContainer}>
-            <Button color="#9BB7BD"
+            <Button
               title="Ver Relatório de Manutenções"
+              color="#9BB7BD"
               onPress={() => {
                 setModalVisible(false);
                 setReportModalVisible(true);
@@ -69,7 +73,7 @@ const MachineCard = () => {
 
       {/* Modal para Relatório de Manutenções */}
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={reportModalVisible}
         onRequestClose={() => setReportModalVisible(false)}
@@ -132,31 +136,30 @@ const styles = StyleSheet.create({
     marginTop: 12,
     backgroundColor: '#9BB7BD',
     borderRadius: 5,
-    margin:10
+    margin: 10,
   },
   modalView: {
-    margin: 0, // Alterar para 0 para ocupar toda a tela
-    backgroundColor: '#4a6572', 
+    margin: 0,
+    backgroundColor: '#4a6572',
     borderRadius: 20,
     padding: 35,
-    flex: 1, // Adicionar para ocupar toda a tela
-    justifyContent: 'center', // Centraliza o conteúdo verticalmente
-    alignItems: 'center', // Centraliza o conteúdo horizontalmente
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 18, // Reduz o tamanho da fonte
+    fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 15,
     color: '#fff',
-    textAlign: 'center', // Centraliza o título
+    textAlign: 'center',
   },
   text: {
-    fontSize: 16, // Reduz o tamanho da fonte para condizer com o tamanho dos botões
-    textAlign: 'center', // Centraliza o texto
+    fontSize: 16,
+    textAlign: 'center',
     color: '#fff',
-    marginBottom: 10, // Adiciona espaçamento entre as linhas de texto
+    marginBottom: 10,
   },
 });
 
-
-export default MachineCard;
+export default MachineCard
